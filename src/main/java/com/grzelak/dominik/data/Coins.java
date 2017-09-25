@@ -1,6 +1,9 @@
 package com.grzelak.dominik.data;
 
-public enum Coins { //typ wyliczeniowy enum definiujacy monety, ktore przyjmuje automat oraz ich poczatkowa ilosc
+/**
+ * Typ wyliczeniowy enum definiujacy monety, ktore przyjmuje automat oraz ich poczatkowa ilosc
+ * */
+public enum Coins {
     ZL_5(500, 5),
     ZL_2(200, 5),
     ZL_1(100, 5),

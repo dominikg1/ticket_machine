@@ -3,6 +3,9 @@ package com.grzelak.dominik.data;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Klasa reprezentujaca sposob przetrzymywania biletow
+ */
 public class TicketContainer {
 
     private int ticket_amount;

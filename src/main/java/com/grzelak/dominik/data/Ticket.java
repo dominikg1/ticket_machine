@@ -1,6 +1,9 @@
 package com.grzelak.dominik.data;
 
-public class Ticket { //klasa reprezentujaca bilet skladajaca sie z nazwy biletu, jego ceny, opcjonalnej znizki oraz ilosci biletow danego rodzaju
+/**
+ * Klasa reprezentujaca bilet skladajaca sie z nazwy biletu, jego ceny, opcjonalnej znizki oraz ilosci biletow danego rodzaju
+ * */
+public class Ticket {
     private String name;
     private int price;
     private double discount;

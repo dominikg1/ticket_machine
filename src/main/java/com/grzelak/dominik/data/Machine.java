@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Klasa reprezentujaca automat
+ */
 public class Machine {
 
     private static final String WRONG_CHOICE = "Bledny wybor. Wybierz jeszcze raz: ";
@@ -19,7 +22,10 @@ public class Machine {
         this.printStream = printStream;
     }
 
-    public void controlLoop() { //petla glowna programu
+    /**
+     * Funkcja bedaca glowna petla programu
+     */
+    public void controlLoop() {
         Ticket chosen;
         int quantity;
         int choose;
@@ -46,6 +52,13 @@ public class Machine {
 
         sc.close();
     }
+
+    /**
+     * Odpowiedzialna za pobranie odpowiedniej wartosci int ze Scannera
+     * Prosi uzytkownika o wpisanie poprawnej liczby z przedzialu from-to
+     * @param from pierwsza liczba nalezaca do przedzialu
+     * @param to ostatnia liczba nalezaca do przedzialu
+     */
     int getInt(int from, int to) {
         while (true) {
             if (sc.hasNextInt()) {
@@ -59,7 +72,11 @@ public class Machine {
         }
     }
 
-     Ticket chooseTicket() { //funkcja odpowiedzialna za wybor odpowiedniego biletu
+    /**
+     * Odpowiedzialna za wybor odpowiedniego biletu
+     * @return zwraca wybrany przez uzytkownika bilet
+     */
+     Ticket chooseTicket() {
         boolean discount = false;
         printStream.print("\nJaki bilet wybierasz:\n1. Ulgowy\n2. Normalny\nTwoj wybor: ");
         int choose = getInt(1, 2);
@@ -85,7 +102,13 @@ public class Machine {
         return tickets.get(getInt(1, tickets.size())-1);
     }
 
-     boolean checkTickets(Ticket ticket, int quantity) { //funkcja sprawdzajaca wystarczajaca ilosc biletow
+    /**
+     * Sprawdza wystarczajaca ilosc biletow
+     * @param ticket wybrany bilet
+     * @param quantity ilosc wybranego biletu
+     * @return zwraca true jesli posiadana jest wystarczajaca ilosc, false w przeciwnym wypadku
+     */
+     boolean checkTickets(Ticket ticket, int quantity) {
         if(quantity <= ticket.getQuantity()) {
             return true;
         }
@@ -93,7 +116,12 @@ public class Machine {
         return false;
     }
 
-     void ticketPaying(Ticket ticket, int quantity){ //funkcja symulujaca placenie za bilet z mozliwoscia anulowania transakcji
+    /**
+     * Symuluje placenie za bilet z mozliwoscia anulowania transakcji
+     * @param ticket wybrany bilet
+     * @param quantity ilosc wybranego biletu
+     */
+     void ticketPaying(Ticket ticket, int quantity){
         ArrayList<Coins> coins = new ArrayList<>();
         Coins c;
         int toPay = ticket.getPrice()*quantity;
@@ -119,7 +147,12 @@ public class Machine {
             executeTransaction(ticket, quantity, paid, toPay, coins);
     }
 
-     Coins checkCoin(int coin) { //funkcja sprawdzajaca czy wrzucono prawidlowa monete
+    /**
+     * Sprawdza czy wrzucono prawidlowa monete
+     * @param coin wartosc int wartosci monety wyrazonej w groszach
+     * @return zwraca monete jesli jest prawidlowa, badz null w przeciwnym wypadku
+     */
+     Coins checkCoin(int coin) {
         for(Coins c: Coins.values()){
             if(c.getPln() == coin)
                 return c;
@@ -128,7 +161,11 @@ public class Machine {
         return null;
     }
 
-     void executeTransaction(Ticket ticket, int quantity, int paid, int toPay, List<Coins> coins){ //funkcja drukujaca bilety przy mozliwosci wyplacenia reszty
+    /**
+     * Drukuje bilety jesli istnieje mozliwosc wyplacenia reszty
+     * @param quantity ilosc biletow do wydrukowania
+     */
+     void executeTransaction(Ticket ticket, int quantity, int paid, int toPay, List<Coins> coins){
         if(payRest(paid-toPay)){
             ticket.setQuantity(ticket.getQuantity()-quantity);
             for (Coins coin : coins) coin.setAmount(coin.getAmount() + 1);
@@ -141,8 +178,8 @@ public class Machine {
     }
 
     /**
-    * funkcja sprawdzajaca czy automat jest w stanie wydac poprawnie reszte, jesli nie - anuluje transakcje
-    * @param rest reszta
+    * Sprawdza czy automat jest w stanie wydac poprawnie reszte, jesli nie - anuluje transakcje
+    * @param rest wartosc reszty do wydania wyrazonej w groszach
     */
      boolean payRest(int rest) {
         if(rest == 0)
